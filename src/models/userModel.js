@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose");
 const bcrypt = require("bcrypt");
+const {defaultImagePath} = require("../secret/defaultImagePath")
 
 const userSchema = new Schema({
     name: {
@@ -20,17 +21,18 @@ const userSchema = new Schema({
                 // A simple regex for email validation
                 return /\S+@\S+\.\S+/.test(v);
             },
-            message: 'Please enter a valid email'
+            message: 'Please enter a valid email',
         }
     },
     password: {
         type: String,
         required: [true, 'Password is required'],
         minlength: [8, 'The length of password should be at least 8 characters'],
-        set: (v) =>bcrypt.hashSync(v, bcrypt.genSaltSync(10))
+        set: (v) =>bcrypt.hashSync(v, bcrypt.genSaltSync(10)),
     },
-    name: {
+    image: {
         type: String,
+        default: defaultImagePath,
         
     },
     address: {

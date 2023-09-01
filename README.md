@@ -16,7 +16,7 @@
 12. MVC Architecture
 13. setUp DB -> mongoose for db connection
 14. scema and Model for User -> bcrypt npm, for inscryption
-15. 
+15. create seed route for testing 
 
 ## Environment setup
 
