@@ -4,6 +4,9 @@ const app = express();
 const xssClean = require('xss-clean')
 const rateLimit = require('express-rate-limit');
 const userRouter = require("./routers/userRouter");
+const { seedUser } = require("./controllers/seedController");
+const seedRouter = require("./routers/seedRouter");
+const cors = require('cors')
 require('dotenv').config()
 
 //middleWare opparation
@@ -17,13 +20,10 @@ const rateLimiter = rateLimit({
 //middleWare,morgan,expressJson,urlencoded,xxs-clean,express-rate-limit,
 app.use(rateLimiter)
 app.use(xssClean())
+app.use(cors())
 app.use(morgan('dev'))
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-
-
-
-
 
 
 
@@ -37,7 +37,15 @@ const isLoggedIn = (req, res, next) =>{
      }
 }
 
-app.use('/api/user',userRouter)
+
+
+
+//all Routes
+app.use('/api/users',userRouter)
+app.use('/api/seed', seedRouter)
+
+
+
 
 
 
@@ -47,10 +55,6 @@ app.get('/test', rateLimiter, (req, res) =>{
           message: "api is working fine",
      })
 })
-
-
-
-
 
 
 

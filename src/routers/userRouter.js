@@ -7,7 +7,7 @@ const userRouter = express.Router();
 
 
 
-//GET: user profile
+//GET: All user profile
 userRouter.get('/', getUsers)
 
 module.exports = userRouter;

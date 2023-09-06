@@ -17,6 +17,9 @@
 13. setUp DB -> mongoose for db connection
 14. scema and Model for User -> bcrypt npm, for inscryption
 15. create seed route for testing 
+16. GET /api/users -> isAdmin -> getAllUsers -> serchByName + pagination functionality
+17. responseHandler controller for error or success
+
 
 ## Environment setup
 
