@@ -6,7 +6,8 @@ const rateLimit = require('express-rate-limit');
 const userRouter = require("./routers/userRouter");
 const { seedUser } = require("./controllers/seedController");
 const seedRouter = require("./routers/seedRouter");
-const cors = require('cors')
+const cors = require('cors');
+const {errorResponse} = require("./controllers/responseController")
 require('dotenv').config()
 
 //middleWare opparation
@@ -69,10 +70,10 @@ app.use((req, res, next) =>{
 
 
 //server error handling -> handle all the errors
-app.use((err, res, next) =>{
-   return res.status(err.status || 500).json({
-     success : false,
-     message : err.message,
+app.use((err, req, res, next) =>{
+   return errorResponse(res, {
+      statusCode: err.status,
+      message: err.message,
    })
 })
 

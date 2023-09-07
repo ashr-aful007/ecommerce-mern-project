@@ -19,6 +19,8 @@
 15. create seed route for testing 
 16. GET /api/users -> isAdmin -> getAllUsers -> serchByName + pagination functionality
 17. responseHandler controller for error or success
+18. GET /api/ users /:id -> get asingle user by id
+19. How to create services in the backend
 
 
 ## Environment setup
