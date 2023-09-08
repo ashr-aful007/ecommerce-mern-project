@@ -21,6 +21,9 @@
 17. responseHandler controller for error or success
 18. GET /api/ users /:id -> get asingle user by id
 19. How to create services in the backend
+20. DELETE /api/users/:id -> delete a single user by id
+21. Refactoring & reusability, dynamic
+22. DeleteImage with helper
 
 
 ## Environment setup
