@@ -1,4 +1,4 @@
-const createError = require('http-errors');
+const {createError }= require('http-errors');
 const mongoose = require('mongoose');
 const User = require('../models/userModel');
 
