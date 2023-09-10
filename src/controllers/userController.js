@@ -104,5 +104,40 @@ const deleteUserById = async(req, res, next) =>{
 
 }
 
+//delete user by id 
+const processRegister = async(req, res, next) =>{
+   try{
+      const {name, email, password, phone, address} = req.body;
 
-module.exports = { getUsers, getUserById, deleteUserById};
+      const newUser = {
+          name,
+          email,
+          password,
+          phone,
+          address
+      }
+
+
+      const userExisits = await User.exists({email: email});
+      if(userExisits){
+          throw createError(409, 'User dwi')
+      }
+
+
+     //send response for user searching 
+     return successResponse(res, {
+        statusCode: 200,
+        message: 'user was created successfully ',  
+        payload: {newUser}    
+     })
+   } catch (error){
+          next(error)
+   }
+
+}
+
+
+module.exports = { getUsers, 
+    getUserById,
+    processRegister,
+    deleteUserById};
