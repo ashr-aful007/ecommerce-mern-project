@@ -6,6 +6,7 @@ const rateLimit = require('express-rate-limit');
 const userRouter = require("./routers/userRouter");
 const { seedUser } = require("./controllers/seedController");
 const seedRouter = require("./routers/seedRouter");
+const createError = require('http-errors');
 const cors = require('cors');
 const {errorResponse} = require("./controllers/responseController")
 require('dotenv').config()
@@ -66,6 +67,8 @@ app.get('/test', rateLimiter, (req, res) =>{
 //client error handling
 app.use((req, res, next) =>{  
      next(createError(404, "route not found"))
+     next()
+     
 })
 
 
@@ -74,7 +77,8 @@ app.use((err, req, res, next) =>{
    return errorResponse(res, {
       statusCode: err.status,
       message: err.message,
-   })
+   });
+   
 })
 
 module.exports = app;

@@ -1,8 +1,10 @@
-const {createError} = require('http-errors');
+const createError = require('http-errors');
 const User = require("../models/userModel");
 const { successResponse } = require('./responseController');
 const {findWithId} = require('../useServiceFun/findItemById');
 const { deleteImage } = require('../helper/deleteimg');
+const { createJSONwebToken } = require('../helper/jsonwebtoken');
+const { JwtActivationKey, clientUrl } = require('../secret');
 const fs = require('fs').promises;
 
 
@@ -104,23 +106,35 @@ const deleteUserById = async(req, res, next) =>{
 
 }
 
-//delete user by id 
+//regester user 
 const processRegister = async(req, res, next) =>{
    try{
       const {name, email, password, phone, address} = req.body;
 
-      const newUser = {
-          name,
-          email,
-          password,
-          phone,
-          address
-      }
+      //create jwt with helper fun
+      const token = createJSONwebToken({name, email, password, phone, address},
+         JwtActivationKey,
+          '10m');
+          
+          //prepare email
+          const emailData = {
+            email,
+            subject: 'Account Activation Email',
+            html: `
+               <h2>Hello ${name} !</h2>
+               <p>Plese Click here to <a href="${clientUrl}/api/users/activate/${token}" target="_blank">
+                active your account</a></p>
+            `
+          }
+
+          //send email
+
+
 
 
       const userExisits = await User.exists({email: email});
       if(userExisits){
-          throw createError(409, 'User dwi')
+          throw createError(409, 'User with this email alrady exist please sign in')
       }
 
 
@@ -128,7 +142,7 @@ const processRegister = async(req, res, next) =>{
      return successResponse(res, {
         statusCode: 200,
         message: 'user was created successfully ',  
-        payload: {newUser}    
+        payload: {token}    
      })
    } catch (error){
           next(error)

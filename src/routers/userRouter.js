@@ -7,7 +7,7 @@ const userRouter = express.Router();
 
 
 
-//GET: All user profile
+//user Router
 userRouter.get('/', getUsers)
 userRouter.post('/process-register', processRegister)
 userRouter.get('/:id', getUserById)
