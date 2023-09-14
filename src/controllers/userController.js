@@ -5,6 +5,7 @@ const {findWithId} = require('../useServiceFun/findItemById');
 const { deleteImage } = require('../helper/deleteimg');
 const { createJSONwebToken } = require('../helper/jsonwebtoken');
 const { JwtActivationKey, clientUrl } = require('../secret');
+const { emailWithNodeMail } = require('../helper/email');
 const fs = require('fs').promises;
 
 
@@ -128,20 +129,27 @@ const processRegister = async(req, res, next) =>{
           }
 
           //send email
+          try{
+            emailWithNodeMail(emailData)
+          }catch(emailError){
+             next(createError(500, 'Faild to send verification email'));
+             return
+          }
 
 
 
 
-      const userExisits = await User.exists({email: email});
-      if(userExisits){
-          throw createError(409, 'User with this email alrady exist please sign in')
-      }
+          const userExists = await User.exists({ email: email });
+          if (userExists) {
+              throw createError(409, 'User with this email already exists, please sign in');
+          }
 
 
      //send response for user searching 
      return successResponse(res, {
         statusCode: 200,
-        message: 'user was created successfully ',  
+        message: `Please go to your ${email} for completing your registration process`
+        ,  
         payload: {token}    
      })
    } catch (error){

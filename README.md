@@ -15,7 +15,7 @@
 11. Environment variable & .gitignore
 12. MVC Architecture
 13. setUp DB -> mongoose for db connection
-14. scema and Model for User -> bcrypt npm, for inscryption
+14. scema and Model for User -> bcryptJs npm, for inscryption
 15. create seed route for testing 
 16. GET /api/users -> isAdmin -> getAllUsers -> serchByName + pagination functionality
 17. responseHandler controller for error or success
@@ -28,8 +28,8 @@
 23. POST /api/users/verify -> verify + register into database
 24. create JWT
 25. POST /api/users/verify + register into database
-26. Send email wih nodemailer -> setUp smtp server & prepare email
-27. 
+26. Send email wih nodemailer -> setUp smtp server & prepare email, npm i nodemaller
+27. POST /api/users/verify -> verigy + register into database
 
 
 
