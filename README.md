@@ -30,6 +30,7 @@
 25. POST /api/users/verify + register into database
 26. Send email wih nodemailer -> setUp smtp server & prepare email, npm i nodemaller
 27. POST /api/users/verify -> verify + register into database
+28. File upload and manage -> npm i multer, 
 
 
 
