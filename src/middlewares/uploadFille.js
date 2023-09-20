@@ -2,11 +2,13 @@
 const multer = require('multer');
 const path = require('path')
 const { uploadDir, maxFileSize, allowedFileTypes } = require('../secret');
+const createError = require('http-errors');
 
 //import requerment
 const UPLOAD_DIR = uploadDir;
 const MAX_FILE_SIZE = maxFileSize;
 const ALLOWED_FILE_TYPES = allowedFileTypes;
+
 
 
 const storage = multer.diskStorage({
@@ -19,11 +21,20 @@ const storage = multer.diskStorage({
      }
    })
    
+   //custom fun for filter file
    const fileFilter = (req, file, cb) =>{
-      
+      const extname = path.extname(file.originalname);
+      if(!ALLOWED_FILE_TYPES.includes(extname.substring(1))){
+        console.log('check file type');
+         return cb(createError(400, 'File type not allowed'));
+      }
+      cb(null, true)
    }
 
 
 
-   const upload = multer({ storage: storage })
+   const upload = multer({ storage: storage, 
+                 limits: {fileSize: MAX_FILE_SIZE},
+                 fileFilter
+   })
    module.exports = upload;
