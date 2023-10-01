@@ -26,7 +26,7 @@ const storage = multer.diskStorage({
       const extname = path.extname(file.originalname);
       if(!ALLOWED_FILE_TYPES.includes(extname.substring(1))){
         console.log('check file type');
-         return cb(createError(400, 'File type not allowed'));
+         return cb(new Error('File type not allowed'), false);
       }
       cb(null, true)
    }
