@@ -15,11 +15,11 @@ const smtpPassword = process.env.SMTP_PASSWORD || '';
 
 const clientUrl = process.env.CLIENT_URL
 
-const uploadDir = process.env.UPLOAD_FILE || 'public/images/users';
+// const uploadDir = process.env.UPLOAD_FILE || 'public/images/users';
 
 const maxFileSize = process.env.MAX_FILE_SIZE || 2097152;
 
-const allowedFileTypes = process.env.ALLOWED_FILE_TYPES || ['jpg', 'jpeg', 'png'];
+const allowedFileTypes = process.env.ALLOWED_FILE_TYPES || ['image/jpg', 'image/jpeg', 'image/png'];
 
 module.exports = { port,
       mongodbUrl,
@@ -28,7 +28,7 @@ module.exports = { port,
        smtpUserName,
        smtpPassword,
        clientUrl,
-       uploadDir,
+      //  uploadDir,
        maxFileSize,
        allowedFileTypes
        }

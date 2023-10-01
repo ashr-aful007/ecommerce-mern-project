@@ -19,7 +19,9 @@ const validateUserRegistration = [
      .notEmpty()
      .withMessage("Email is required")
      .isLength({ min: 6})
-     .withMessage("password should be at least 6 characters long"),
+     .withMessage("password should be at least 6 characters long")
+     .matches(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).+$/)
+     .withMessage('passowrd should be one contain at least one uppercase letter one lowercase letter, one number, and one special character'), 
      body("address")
      .trim()
      .notEmpty()
@@ -31,9 +33,13 @@ const validateUserRegistration = [
      .notEmpty()
      .withMessage("phone is required"),
      body("image")
-     .optional()
-     .isString()
-     .withMessage("phone is required")
+     .custom((value, {req}) =>{
+          if(!req.file || !req.file.buffer){
+               throw new Error('User image is required')
+          }
+          return true;
+     })
+     .withMessage("user imge is requred")
 
 
 ]

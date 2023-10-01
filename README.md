@@ -31,6 +31,7 @@
 26. Send email wih nodemailer -> setUp smtp server & prepare email, npm i nodemaller
 27. POST /api/users/verify -> verify + register into database
 28. File upload and manage -> npm i multer, 
+29. input validation with -> express validator
 
 
 

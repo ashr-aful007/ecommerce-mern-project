@@ -113,8 +113,12 @@ const processRegister = async(req, res, next) =>{
    try{
       const {name, email, password, phone, address} = req.body;
 
+      const imageBufferString = req.file.buffer.toString('base64');
+      if(!req.file){
+          throw createError('image is requrd')
+      }
       //create jwt with helper fun
-      const token = createJSONwebToken({name, email, password, phone, address},
+      const token = createJSONwebToken({name, email, password, phone, address,image: imageBufferString},
          JwtActivationKey,
           '10m');
           
