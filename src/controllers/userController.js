@@ -81,7 +81,52 @@ const getUserById = async(req, res, next) =>{
 }
 
 
-//delete user by id 
+//update user with ID
+const updateUserById = async(req, res, next) =>{
+   try{
+      const userId = req.params.id
+      const options = {password: 0}
+      await findWithId(User, userId, options)
+      const updateOptions = {new: true, runValidators: true, context: 'query'}
+
+      //updates obj
+      let updates = {};
+      //name, email, password, phone, image, address
+      for(let key in req.body){
+         if(['name', 'password', 'phone', 'address'].includes(key)){
+            updates[key] = req.body[key]
+         }
+      }
+
+      //check image size convert buffer string
+      const image = req.file;
+      if(image){
+         if(image){
+            //image size maximum 2 mb
+            if(image.size > 1024 * 1024 * 2){
+               throw createError(400, 'Image file is too large it must be less than 2 Mb')
+            }
+            updates.image = image.buffer.toString('base64');
+         }
+      }
+
+      const updatedUser = await User.findByIdAndUpdate(userId,updates, updateOptions);
+
+      if(!updatedUser){
+         throw createError(404, 'Usaer with this ID does not exist')
+      }
+
+     return successResponse(res, {
+        statusCode: 200,
+        message: 'user was updated successfully ',   
+        payload: updatedUser   
+     })
+   } catch (error){
+          next(error)
+   }
+
+}
+
 const deleteUserById = async(req, res, next) =>{
    try{
       const id = req.params.id
@@ -112,11 +157,20 @@ const deleteUserById = async(req, res, next) =>{
 const processRegister = async(req, res, next) =>{
    try{
       const {name, email, password, phone, address} = req.body;
+     
 
-      const imageBufferString = req.file.buffer.toString('base64');
-      if(!req.file){
+      const image = req.file;
+
+      if(!image){
           throw createError('image is requrd')
       }
+      if(image.size > 1024 * 1024 * 2){
+         throw createError(400, 'Image file is too large it must be less than 2 Mb')
+      }
+
+       //BufferString for img handle
+       const imageBufferString = req.file.buffer.toString('base64');
+
       //create jwt with helper fun
       const token = createJSONwebToken({name, email, password, phone, address,image: imageBufferString},
          JwtActivationKey,
@@ -208,8 +262,10 @@ const activateUserAccout = async(req, res, next) =>{
 }
 
 
+
 module.exports = { getUsers, 
     getUserById,
     processRegister,
     activateUserAccout,
+    updateUserById,
     deleteUserById};
