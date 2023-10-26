@@ -2,7 +2,8 @@ const createError = require('http-errors');
 const User = require("../models/userModel");
 const { successResponse } = require('./responseController');
 const {createJSONwebToken} = require('../helper/jsonwebtoken');
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
+const { jwtAccessKey } = require('../secret');
 
 
 
@@ -26,7 +27,23 @@ const handleLogin = async(req, res, next) =>{
                )
           }
           //isBanned
+          if(user.isBanned){
+               throw createError(403, 'you are Banned. please contact authority')
+          }
           //token, cookie
+
+          //create jwt
+          const accessToken = createJSONwebToken(
+               {email},
+               jwtAccessKey,
+               '10m'
+          );
+          res.cookie('access_token', accessToken, {
+               maxAge: 15 * 60 * 1000, // 15 minutes
+               httpOnly: true,
+               secure: true,
+               sameSite: 'none'
+          })
           //send respsonse 
           return successResponse(res, {
                statusCode: 200,

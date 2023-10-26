@@ -9,6 +9,8 @@ const defaultImagePath = process.env.DEFULT_USER_IMAGE_PATH || '../public/images
 
 const JwtActivationKey = process.env.JWT_ACTIVATION_KEY || '&^$%%$ERDFD&65468744@@!!&*$%GFFF';
 
+const jwtAccessKey = process.env.JWT_ACCESS_KEY || '&^$%%$ERDFD&65468744@@!!&*$%GFFF';
+
 const smtpUserName = process.env.SMTP_USERNAME || '';
 
 const smtpPassword = process.env.SMTP_PASSWORD || '';
@@ -30,5 +32,6 @@ module.exports = { port,
        clientUrl,
       //  uploadDir,
        maxFileSize,
-       allowedFileTypes
+       allowedFileTypes,
+       jwtAccessKey
        }
