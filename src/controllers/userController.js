@@ -95,7 +95,10 @@ const updateUserById = async(req, res, next) =>{
       for(let key in req.body){
          if(['name', 'password', 'phone', 'address'].includes(key)){
             updates[key] = req.body[key]
+         }else if(['email'].includes(key)){
+            throw createError(400, 'Email can no be updated')
          }
+         
       }
 
       //check image size convert buffer string

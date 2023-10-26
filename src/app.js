@@ -8,7 +8,9 @@ const { seedUser } = require("./controllers/seedController");
 const seedRouter = require("./routers/seedRouter");
 const createError = require('http-errors');
 const cors = require('cors');
-const {errorResponse} = require("./controllers/responseController")
+const {errorResponse} = require("./controllers/responseController");
+const authRouter = require("./routers/authRouter");
+
 require('dotenv').config()
 
 //middleWare opparation
@@ -45,6 +47,8 @@ const isLoggedIn = (req, res, next) =>{
 //all Routes
 app.use('/api/users',userRouter)
 app.use('/api/seed', seedRouter)
+app.use('/api/auth', authRouter)
+
 
 
 
