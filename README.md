@@ -32,6 +32,12 @@
 27. POST /api/users/verify -> verify + register into database
 28. File upload and manage -> npm i multer, 
 29. input validation with -> express validator
+31. should we store image as string or buffer?
+32. POST /api/auth/login -> user login
+33. POST /api/auth/logout -> user logout
+34. Middlewares -> isLoggedIn, isLoggedOut, isAdmin
+35. GET /api/auth/refresh -> refresh the token
+
 
 
 
