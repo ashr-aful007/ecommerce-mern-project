@@ -41,9 +41,9 @@ const handleLogin = async(req, res, next) =>{
           res.cookie('access_token', accessToken, {
                maxAge: 15 * 60 * 1000, // 15 minutes
                httpOnly: true,
-               secure: true,
+               // secure: true,
                sameSite: 'none'
-          })
+          });
           //send respsonse 
           return successResponse(res, {
                statusCode: 200,
@@ -56,6 +56,23 @@ const handleLogin = async(req, res, next) =>{
      }
 
 }
+const handleLogout = async(req, res, next) =>{
+     try{
+          //logOut Clear cookie
+          res.clearCookie('access_token')
+
+          //send respsonse 
+          return successResponse(res, {
+               statusCode: 200,
+               message: 'users logout successfully',
+               payload: {},
+          })
+
+     } catch (error){
+          next(error)
+     }
+
+}
 
 
-module.exports = { handleLogin }
+module.exports = { handleLogin, handleLogout }
