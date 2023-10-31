@@ -10,6 +10,7 @@ const createError = require('http-errors');
 const cors = require('cors');
 const {errorResponse} = require("./controllers/responseController");
 const authRouter = require("./routers/authRouter");
+const cookieParser = require('cookie-parser')
 
 require('dotenv').config()
 
@@ -28,6 +29,7 @@ app.use(cors())
 app.use(morgan('dev'))
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
+app.use(cookieParser())
 
 
 
